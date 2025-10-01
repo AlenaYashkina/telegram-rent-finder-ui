@@ -1,0 +1,20 @@
+[
+  {
+    "channel": "example_channel",
+    "message_id": 123,
+    "date_local": "2025-10-01 12:00",
+    "price_usd": 450,
+    "score": 6,
+    "url": "https://t.me/example/123",
+    "text": "Сдаётся 2 спальни на Инесаридзе, $450/мес, долгосрочно, балкон. Без Magnolia."
+  },
+  {
+    "channel": "another_channel",
+    "message_id": 456,
+    "date_local": "2025-10-01 13:20",
+    "price_usd": 500,
+    "score": 7,
+    "url": "https://t.me/another/456",
+    "text": "3к, 2 спальни, Angisa, 12 мес контракт, $500. Не посуточно."
+  }
+]
