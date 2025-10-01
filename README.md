@@ -1,7 +1,6 @@
 # Telegram Rent Finder — Collector
 
 RU: Реальный сборщик объявлений с фото из Telegram + жёсткая фильтрация (Батуми, 2 спальни, $400–$500, помесячно).  
-EN comments in code, RU логи для удобства.
 
 ## Установка
 Windows 10, Python 3.10:
