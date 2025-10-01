@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.venv/
+venv/
+.env
+.env.*
+# IDE
+.vscode/
+.idea/
+# Data / logs
+*.log
+*.tmp
+*.cache
+.DS_Store
+# Local sessions/exports
+*.session*
+matches.csv
+progress.json
+exports/
+downloads/
