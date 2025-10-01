@@ -12,7 +12,7 @@ pip install -r requirements.txt
 copy .env.example .env
 ```
 
-Заполни в `.env`: `TELEGRAM_API_ID`, `TELEGRAM_API_HASH`, `TELEGRAM_PHONE`.  
+Заполните в `.env`: `TELEGRAM_API_ID`, `TELEGRAM_API_HASH`, `TELEGRAM_PHONE`.  
 Ollama опционален: если недоступен — парсинг цен/спален работает по правилам.
 
 ## Запуск
@@ -28,7 +28,3 @@ python -m scripts.collector
 - Отклоняем: студии/1+1, посуточно/daily, вне Батуми (Gonio/Квариати/Сарпи/…),
   Magnolia/Alliance Magnolia, цена вне диапазона, нет явных 2+ спален.
 - Приоритет улицам: Inasaridze/Kobaladze/Angisa (+1 к score).
-
-## Примечания
-- Никакие ключи/телефоны в коде не хардкодим — только `.env`.
-- Если светанули API-пары — перегенерируй на https://my.telegram.org/.
