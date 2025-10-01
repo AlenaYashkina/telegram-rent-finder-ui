@@ -1,64 +1,35 @@
-# Telegram Rent Finder UI
+# Telegram Rent Finder — Collector
 
-*RU summary:* Мини‑демо для отбора объявлений об аренде из Telegram‑каналов **только с фото**: импорт постов (офлайн пример), LLM‑нормализация полей (цена/район/метраж/контакты/ссылка), фильтрация и экспорт. Для первого релиза работает на локальном датасете без ключей и без Telegram‑сессии. Дальше подключим ваш реальный загрузчик.
+RU: Реальный сборщик объявлений с фото из Telegram + жёсткая фильтрация (Батуми, 2 спальни, $400–$500, помесячно).  
+EN comments in code, RU логи для удобства.
 
----
+## Установка
+Windows 10, Python 3.10:
 
-## Overview
-**Telegram Rent Finder UI** is a tiny end‑to‑end demo that turns messy Telegram housing posts **with images** into a clean, reviewable table:
-- **Ingest**: load sample posts (JSON/CSV). Real Telegram scraper will be plugged in later.
-- **Normalize (LLM)**: extract structured fields (price, district, area, contacts, link) into JSON (provider‑agnostic).
-- **Filter & Review**: interactive UI to shortlist.
-- **Export**: CSV/PDF with selected listings.
-
-> Milestone 1 ships with **offline demo data** and a simple UI. Telegram and LLM providers are pluggable.
-
-## Features (M1)
-- Offline sample dataset (`/data/sample_listings.json`)
-- LLM schema extraction to JSON (OpenAI or local Ollama)
-- Streamlit UI with filters (price, district)
-- Export to CSV/PDF
-- Windows‑friendly setup (Python 3.10)
-- **Images only** policy: posts without images are skipped by design
-
-## Stack
-- **Python 3.10**, **Streamlit**
-- **pydantic** (schema), **pandas**
-- **LLM provider** via environment (OpenAI or local **Ollama**)
-- Optional: SQLite for saved shortlists
-
-## Project Layout (planned)
-```
-telegram-rent-finder-ui/
-  app/                # Streamlit UI
-  normalizer/         # LLM prompts + schema extraction
-  data/               # sample data for offline demo
-  scripts/            # helpers (optional)
-  .env.example
-  requirements.txt
-  README.md
-```
-
-## Quickstart (coming in next commits)
 ```bash
 python -m venv .venv
-. .venv/Scripts/activate      # Windows 10/11
+. .venv/Scripts/activate
 pip install -r requirements.txt
-streamlit run app/app.py
+copy .env.example .env
 ```
 
-## Env vars
-Copy `.env.example` to `.env` and set:
-```
-LLM_PROVIDER=openai|ollama
-OPENAI_API_KEY=...
-OLLAMA_MODEL=llama3
+Заполни в `.env`: `TELEGRAM_API_ID`, `TELEGRAM_API_HASH`, `TELEGRAM_PHONE`.  
+Ollama опционален: если недоступен — парсинг цен/спален работает по правилам.
+
+## Запуск
+```bash
+python -m scripts.collector
 ```
 
-## Roadmap
-- **M1:** offline demo + minimal UI (filters, export) — *this repo*
-- **M2:** plug existing Telegram photo scraper (your code, with `.env` config)
-- **M3:** prompt tuning, better dedup & contact parsing; optional SQLite
+- Первым запуском запросит код/пароль Telegram.
+- Результат в `matches.csv` (его открывает `app/app.py`: `streamlit run app/app.py`).
 
-## License
-MIT
+## Политика отбора
+- **Только посты с изображениями** (текст без фото — пропуск).
+- Отклоняем: студии/1+1, посуточно/daily, вне Батуми (Gonio/Квариати/Сарпи/…),
+  Magnolia/Alliance Magnolia, цена вне диапазона, нет явных 2+ спален.
+- Приоритет улицам: Inasaridze/Kobaladze/Angisa (+1 к score).
+
+## Примечания
+- Никакие ключи/телефоны в коде не хардкодим — только `.env`.
+- Если светанули API-пары — перегенерируй на https://my.telegram.org/.
